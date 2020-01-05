@@ -10,7 +10,6 @@ output:
     includes:
       in_header: preamble_latex.tex
 documentclass: bxjsarticle
-geometry: no
 
 ---
 
