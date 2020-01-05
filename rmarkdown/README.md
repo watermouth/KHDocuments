@@ -19,7 +19,7 @@ LaTeX関連の設定が必要となる.
 - RStudio: 1.2.5019
 - R: 3.6.2
 
-### 環境構築
+### 必要なライブラリ等のinstall
 
 - LaTeX環境: TinyTeX
 - フォント: ipaex
@@ -33,6 +33,35 @@ tinytex::tlmgr_install("ipaex") # IPAexフォントのインストール
 - ref
     - https://shohei-doi.github.io/notes/posts/2019-04-12-rmarkdown-pdf/
     - https://www.karada-good.net/analyticsr/r-633
+
+### pandoc template file の修正
+
+knit (rmarkdown::render) を実行すると出てくるエラー
+
+> ! LaTeX Error: Option clash for package geometry.
+
+への対処として, 
+yamlでno指定した上で, pandocのtemplateファイル中のgeometry部分をコメントアウト.
+
+knit実行のlogをみると, 下のようにpandocを実行している部分がある.
+
+``` cmd
+"C:/Program Files/RStudio/bin/pandoc/pandoc" +RTS -K512m -RTS sample_fig_float_adjustment.utf8.md --to latex --from markdown+autolink_bare_uris+tex_math_single_backslash --output sample_fig_float_adjustment.tex --template "c:\Users\your_user_name_here\R\win-library\3.6\rmarkdown\rmd\latex\default-1.17.0.2.tex" --highlight-style tango --pdf-engine xelatex --include-in-header preamble_latex.tex --variable graphics=yes --lua-filter "c:/Users/your_user_name_here/R/win-library/3.6/rmarkdown/rmd/lua/pagebreak.lua" --lua-filter "c:/Users/your_user_name_here/R/win-library/3.6/rmarkdown/rmd/lua/latex-div.lua" --variable "compact-title:yes" 
+```
+
+この例だと
+--template 
+で指定されているファイル default-1.17.0.2.tex
+について, 下のように%でコメントアウトする.
+
+``` latex
+$if(geometry)$
+%\usepackage[$for(geometry)$$geometry$$sep$,$endfor$]{geometry}
+$endif$
+```
+
+- ref
+  - https://qiita.com/nozma/items/1c6b000b674225fd40d7
 
 ### rmarkdownファイルのyamlヘッダ
 
@@ -48,7 +77,9 @@ header-includes:
   - \usepackage{zxjatype} 
   - \usepackage[ipa]{zxjafont} 
 geometry: no
+
 ```
+
 
 - ref
     - https://shohei-doi.github.io/notes/posts/2019-04-12-rmarkdown-pdf/
@@ -76,10 +107,14 @@ preamble fileを作成してそれを読み込むことでlatex設定を変え�
 
 https://stackoverflow.com/questions/16626462/figure-position-in-markdown-when-converting-to-pdf-with-knitr-and-pandoc
 
+- example: fig_float_adjustment
+
 ## kableを用いた表のサイズ・位置調整
 
 基本的にknitr::kableを用いて表を出力する. 
 kableExtraを用いることで実用上必要な調整が容易となる.
+
+- example: sample_using_Japanese_output_pdf.Rmd
 
 - ref
   - https://haozhu233.github.io/kableExtra/
