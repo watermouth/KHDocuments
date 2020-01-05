@@ -1,0 +1,100 @@
+---
+title: "アンタイトルドゥ"
+author: "日本語の著者名"
+date: "2020/1/5"
+output:
+  pdf_document: 
+    latex_engine: xelatex 
+    number_sections: false
+documentclass: bxjsarticle
+header-includes: 
+  - \usepackage{zxjatype} 
+  - \usepackage[ipa]{zxjafont}
+geometry: no
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+## knitrオプション指定なしでも表示されるggplotの図
+
+```{r}
+library(ggplot2)
+d <- data.frame(mtcars)
+ggplot(d) + geom_point(aes(x=mpg, y=cyl, group=gear, color=factor(gear)))
+```
+
+## knitrオプション指定しないと表示できない図
+
+### 指定あり
+
+```{r,   dev = "cairo_pdf", dev.args = list(family = "ipaexg")}
+library(ggplot2)
+d <- data.frame(mtcars)
+ggplot(d) + geom_point(aes(x=mpg, y=cyl, group=gear, color=factor(gear))) +
+  xlab("エムピージー" ) + ylab('シーワイエル')
+
+```
+
+### 指定なし
+
+``` 
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## 'mbcsToSbcs' 中の 
+```
+
+といったWarningメッセージが出て, 実質的に処理はここで止まってしまう.
+
+
+<!-- ```{r} -->
+<!-- library(ggplot2) -->
+<!-- d <- data.frame(mtcars) -->
+<!-- ggplot(d) + geom_point(aes(x=mpg, y=cyl, group=gear, color=factor(gear))) + -->
+<!--   xlab("エムピージー" ) + ylab('シーワイエル') -->
+
+<!-- ``` -->
+
+## kableによる表
+
+丁度よく表示される.
+
+```{r}
+knitr::kable(mtcars, booktabs=T)
+```
+
+これははみ出る.
+
+```{r}
+knitr::kable(t(mtcars), booktabs=T)
+```
+
+1ページに収める. この場合は縮小される.
+
+```{r}
+library(dplyr)
+library(kableExtra)
+
+knitr::kable(t(mtcars), booktabs=T) %>%
+  kable_styling(latex_options = "scale_down")
+```
