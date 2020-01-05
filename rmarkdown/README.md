@@ -45,7 +45,7 @@ yamlでno指定した上で, pandocのtemplateファイル中のgeometry部分�
 
 knit実行のlogをみると, 下のようにpandocを実行している部分がある.
 
-``` cmd
+``` text
 "C:/Program Files/RStudio/bin/pandoc/pandoc" +RTS -K512m -RTS sample_fig_float_adjustment.utf8.md --to latex --from markdown+autolink_bare_uris+tex_math_single_backslash --output sample_fig_float_adjustment.tex --template "c:\Users\your_user_name_here\R\win-library\3.6\rmarkdown\rmd\latex\default-1.17.0.2.tex" --highlight-style tango --pdf-engine xelatex --include-in-header preamble_latex.tex --variable graphics=yes --lua-filter "c:/Users/your_user_name_here/R/win-library/3.6/rmarkdown/rmd/lua/pagebreak.lua" --lua-filter "c:/Users/your_user_name_here/R/win-library/3.6/rmarkdown/rmd/lua/latex-div.lua" --variable "compact-title:yes" 
 ```
 
@@ -104,8 +104,41 @@ knitr::opts_chunk$set(
 ### コードブロックと画像の出力位置が前後しないように順に出力したい.
 
 preamble fileを作成してそれを読み込むことでlatex設定を変えることで実現する.
+ただし, yamlのheader_includes と, includes: in_header: は両立できないようである (例外はあるようだが条件不明). そこでpreamble fileを使う場合には,
+日本語利用のためのusepackage命令も含めて記述し, 
+header_includesを使わないようにする.
 
-https://stackoverflow.com/questions/16626462/figure-position-in-markdown-when-converting-to-pdf-with-knitr-and-pandoc
+``` yaml
+output:
+  pdf_document: 
+    latex_engine: xelatex 
+    number_sections: false
+    includes:
+      in_header: preamble_latex.tex
+documentclass: bxjsarticle
+geometry: no
+
+```
+
+preamble_latex.tex 
+
+``` latex
+\usepackage{float}
+\let\origfigure\figure
+\let\endorigfigure\endfigure
+\renewenvironment{figure}[1][2] {
+    \expandafter\origfigure\expandafter[H]
+} {
+    \endorigfigure
+}
+% include_headersで指定していたusepackage文をこちらに書いておく
+\usepackage{zxjatype} 
+\usepackage[ipa]{zxjafont}
+```
+
+- ref
+  - https://stackoverflow.com/questions/16626462/figure-position-in-markdown-when-converting-to-pdf-with-knitr-and-pandoc
+  - https://github.com/rstudio/rmarkdown/issues/816
 
 - example: fig_float_adjustment
 
