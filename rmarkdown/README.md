@@ -5,11 +5,11 @@
 ### はじめに
 
 RStudioからrmarkdownを用いて簡単にソースコード, text, 動的に得られた図表を埋め込んだ
-文書を作成できる. 
-デフォルト設定ではhtmlファイルを出力する場合のみ容易に実現できる.
+文書を作成できる. デフォルト設定ではhtmlファイルを出力する場合のみ容易に実現できる.
 日本語を用いたpdfファイル出力, さらに日本語文字列を含むggplot2による画像の埋め込みなども行うには, 
-LaTeX関連の設定が必要となる.
-ここではそれをまとめておく.
+LaTeX関連の設定が必要となる. ここではそれをまとめておく.
+
+用いるrmarkdownのバージョンによって設定が異なる点があるので, 要注意.
 
 ### 利用環境
 
@@ -18,6 +18,7 @@ LaTeX関連の設定が必要となる.
 - OS: Windows 10 home
 - RStudio: 1.2.5019
 - R: 3.6.2
+- rmarkdown: 1.X (失念したが2.0ではない. 2.0の場合についても言及する.)
 
 ### 必要なライブラリ等のinstall
 
@@ -35,6 +36,8 @@ tinytex::tlmgr_install("ipaex") # IPAexフォントのインストール
     - https://www.karada-good.net/analyticsr/r-633
 
 ### pandoc template file の修正
+
+> rmarkdown 2.0 の場合はpandoc template 指定がなく, yamlでgeometryについて記述しないだけで良い.
 
 knit (rmarkdown::render) を実行すると出てくるエラー
 
