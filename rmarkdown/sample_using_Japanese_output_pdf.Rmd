@@ -10,7 +10,7 @@ documentclass: bxjsarticle
 header-includes: 
   - \usepackage{zxjatype} 
   - \usepackage[ipa]{zxjafont}
-geometry: no
+
 ---
 
 ```{r setup, include=FALSE}
