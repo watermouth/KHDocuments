@@ -37,7 +37,7 @@ tinytex::tlmgr_install("ipaex") # IPAexフォントのインストール
 
 ### pandoc template file の修正
 
-> rmarkdown 2.0 の場合はpandoc template 指定がなく, yamlでgeometryについて記述しないだけで良い.
+**注意: rmarkdown 2.0 の場合はpandoc template 指定がなく, yamlでgeometryについて記述しないだけで良い.**
 
 knit (rmarkdown::render) を実行すると出てくるエラー
 
@@ -90,6 +90,7 @@ geometry: no
 ```
 
 rmarkdown v2.0の場合は
+
 ``` yaml
 geometry: no
 ```
