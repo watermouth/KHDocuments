@@ -27,7 +27,8 @@ packageやmoduleの開発に対しても同じように作業したい.
 
 デフォルトのcurrent directoryは,
 Interactive Windowの開き方により異なる.
-- .pyファイル上で"Run Current File In Python Interactive Window"を実行したときは, そのファイルが置いてあるディレクトリ
+- .pyファイル上で"Run Current File In Python Interactive Window"を実行したときは, そのファイルが置いてあるディレクトリ. [^x1] 
+
 - command paltette にて"Python: Show Python Interactive Window"
 を実行したときは, 自動的に作成される一時ディレクトリ
 (ex. '/tmp/26ef657d-4952-4b33-a899-13fac6b8b5b2')
@@ -72,6 +73,8 @@ Workspaceでないsettingsにも設定できるが,
 jupyter server は終了しておらず, 再度 Interactive Window 
 を開いた際に先ほどの実行状態が残っている場合がある. 
 明示的に "Restart IPython Kernel" を実行するとよい.
+
+[^x1]:これを利用すると,ダミーの.pyファイルを所定のディレクトリにおいて何かprint文だけでも書いておけば,そのファイルに対して実行することでos.chdir関数の代りになる.
 
 [^1]: 内部挙動としては "Show Python Interactive Window" の場合は一時ディレクトリをcurrent directory として jupyter notebook が起動 > runStartupCommands の実行 となり, "Run ~"の場合は指定されたファイルのディレクトリを current directory として jupyter notebook が起動している, ということなのかもしれない. いずれにせよ "Reload IPython Kernel" すれば runStartupCommands は実行される.
 
