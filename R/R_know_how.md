@@ -43,3 +43,9 @@ locale設定のcp932と整合しないで何やらエラーが出てしまう, �
 - ref
   - https://notchained.hatenablog.com/entry/2015/06/19/233502
   - https://github.com/rstudio/rstudio/issues/3026
+
+
+### ファイルを開くときのデフォルトエンコーディングを指定する
+
+global optionとproject optionがあり, Rのパッケージ開発プロジェクト中ではプロジェクトオプションが優先されることに注意する。
+
