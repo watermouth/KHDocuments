@@ -39,14 +39,14 @@ Sub CopySheetToTextFile(sheet As Worksheet, filePath As String, rowSize As Integ
     ' ここで1スタートに変わることに注意
     bufArray = Range(sheet.Cells(1, 1), sheet.Cells(rowSize, colSize)).Value ' sheetを指定しないと, 意図しないsheetを参照してしまう.
     Open filePath For Output As #1
-        n = 1
+        n = 0
         Do Until n = rowSize
+            n = n + 1
             buf = ""
             For j = 1 To colSize
                 buf = buf & bufArray(n, j) & Chr(9)
             Next j
             Print #1, buf
-            n = n + 1
         Loop
     Close #1
     Application.ScreenUpdating = True
@@ -58,7 +58,7 @@ Sub PasteTextFileToSheet(filePath As String, sheet As Worksheet, rowSize As Inte
     ReDim bufArray(rowSize, colSize)
     Open filePath For Input As #1
         n = 0
-        Do Until n = rowSize - 1
+        Do Until n = rowSize ' この書き方だと rowSizeまで.
             Line Input #1, buf
             bufRow = Split(buf, Chr(9)) ' tab
             'bufRow = Split(buf, ",")
