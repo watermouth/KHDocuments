@@ -7,6 +7,7 @@ wsl.conf によって wsl起動時のmountやwindows PATH 環境変数の引き�
 編集するたびに毎回Restart-Serviceが必要なので, 要注意である.  
 
 すべてのterminalを終了したのち, 管理者権限で実行(Ctrl + shift + Enterで実行)したpowershell 上で
+
 ``` powershell
     Restart-Service LxssManager
 ```
@@ -27,7 +28,7 @@ Command is only available in WSL or inside a Visual Studio Code terminal.
 このメッセージは、vscode-server のcodeであるコマンドライン (CLI) 版が実行されていることを示している.
 vscode-serverのコマンドラインとは, Remote-WSL (やRemote-SSH) でvscodeから接続したときに生成されるものである. 指定したdistributionのterminal上で、localのWindowsのvscode を実行しても生成される. これらはvscodeのGUIを起動し、Remote-WSLで接続するために必要なもののようである. vscodeのGUIから接続したとき, vscode中のterminalではenvを見るとPATHの先頭にvscode-serverのbinが指定されている.
 では実行すべきcodeはどれかというと, localのWindowsのvscode である. これに対するpathが通っていれば良い.
-特に何も設定していなければ自然にWindowsの%PATH%がdistributionの$PATHに引き継がれているため, codeを実行できる. 何らかの$PATHの変更処理を実施しているために生じる問題である.
+特に何も設定していなければ自然にWindowsの%PATH%がdistributionの\$PATHに引き継がれているため, codeを実行できる. 何らかの\$PATHの変更処理を実施しているために生じる問題である.
 対策としては, "/mnt/c/Program Files/Microsoft VS Code/bin" をWindows上のcodeのパスとすると,
 ``` bash
 export PATH=\$PATH:"/mnt/c/Program Files/Microsoft VS Code/bin" # double quote で囲むのがポイント.
